@@ -1,0 +1,15 @@
+---
+
+- block:
+
+    - include_tasks: context.yml
+
+    - include_tasks: deploy_ca__ubuntu.yml
+      when: ansible_distribution == 'Ubuntu'
+
+  when: want_custom_ca
+
+
+- name: set has_custom_ca
+  set_fact:
+    has_custom_ca: "{{ want_custom_ca }}"

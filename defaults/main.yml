@@ -1,0 +1,9 @@
+---
+
+want_custom_ca: yes
+
+custom_ca_label: local
+
+custom_ca_certificates_directory: "{{ system_ca_certificates_directory }}/{{ custom_ca_label }}"
+
+custom_ca_certificates: []

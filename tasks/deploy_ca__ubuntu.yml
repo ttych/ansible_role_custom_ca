@@ -1,0 +1,25 @@
+---
+
+- name: ensure custom ca-certifactes directory
+  file:
+    path: "{{ custom_ca_certificates_directory }}"
+    state: directory
+    mode: '0755'
+    owner: root
+    group: "{{ root_group }}"
+
+- name: deploy custom ca
+  copy:
+    src: "{{ item.src }}"
+    dest: "{{ custom_ca_certificates_directory }}/{{ item.as | default( item.src | basename | regex_replace('\\.[^.]+$', '.crt') ) }}"
+    owner: root
+    group: "{{ root_group }}"
+    mode: "0644"
+  loop: "{{ custom_ca_certificates }}"
+  register: t_custom_ca_deploy_update
+
+- name: update-ca-certificates
+  command:
+    cmd: update-ca-certificates
+  register: t_custom_ca_system_update
+  when: t_custom_ca_deploy_update.changed
