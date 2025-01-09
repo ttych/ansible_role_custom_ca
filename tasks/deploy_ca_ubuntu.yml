@@ -8,15 +8,26 @@
     owner: root
     group: "{{ root_group }}"
 
+- name: set custom_ca_certificates_deployment
+  set_fact:
+    custom_ca_certificates_deployment: >-
+      [ {% for item in custom_ca_certificates %}
+       {
+        "src": "{{ item.src }}",
+        "dest": "{{ custom_ca_certificates_directory }}/{{ item.as | default(item.src | basename | regex_replace('\\.[^.]+$', '.crt')) }}"
+       }
+      {% endfor %} ]
+
 - name: deploy custom ca
   copy:
     src: "{{ item.src }}"
-    dest: "{{ custom_ca_certificates_directory }}/{{ item.as | default( item.src | basename | regex_replace('\\.[^.]+$', '.crt') ) }}"
+    dest: "{{ item.dest }}"
     owner: root
     group: "{{ root_group }}"
     mode: "0644"
-  loop: "{{ custom_ca_certificates }}"
+  loop: "{{ custom_ca_certificates_deployment }}"
   register: t_custom_ca_deploy_update
+
 
 - name: update-ca-certificates
   command:

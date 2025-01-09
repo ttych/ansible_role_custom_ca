@@ -4,8 +4,9 @@
 
     - include_tasks: context.yml
 
-    - include_tasks: deploy_ca__ubuntu.yml
-      when: ansible_distribution == 'Ubuntu'
+    - include_tasks: deploy_ca_system.yml
+
+    - include_tasks: deploy_ca_firefox.yml
 
   when: want_custom_ca
 

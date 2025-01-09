@@ -1,0 +1,8 @@
+---
+
+- name: init custom_ca_certificates_deployment
+  set_fact:
+    custom_ca_certificates_deployment: []
+
+- include_tasks: deploy_ca_ubuntu.yml
+  when: ansible_distribution == 'Ubuntu'

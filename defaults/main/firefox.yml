@@ -1,0 +1,8 @@
+---
+
+custom_ca_firefox_policies_json_path: /usr/lib/firefox/distribution/policies.json
+
+custom_ca_firefox_snap_path: /snap/firefox
+custom_ca_firefox_snap_version: current
+custom_ca_firefox_snap_config_dir: /var/lib/snapd/desktop/applications/firefox
+custom_ca_firefox_snap_policies_json_path: "{{ custom_ca_firefox_snap_config_dir }}/policies.json"
